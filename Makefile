@@ -20,7 +20,7 @@ TARGET = main
 
 
 
-aes_server: src/rev.c src/cssarev.c
+rev: src/rev.c src/cssarev.c
 	$(CC) $(CFLAGS) -o bin/rev src/rev.c src/cssarev.c -O0 $(CHEADER_DIR) $(CLIBDIR) $(CLIBS)
 
 
@@ -43,8 +43,8 @@ all: $(TARGET)
 
 
 
-debug: src/$(TARGET).c src/ctattack.c
-	$(CC) $(CFLAGS) -o bin/$(TARGET) $(TARGET).c src/ctattack.c -O0 -g $(CHEADER_DIR)
+debug: src/$(TARGET).c src/cssarev.c
+	$(CC) $(CFLAGS) -o bin/$(TARGET) $(TARGET).c src/cssarev.c -O0 -g $(CHEADER_DIR)
 
 
 run: bin/$(TARGET) 

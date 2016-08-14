@@ -225,8 +225,9 @@ void ptr2bin(void* ptr, char bin[65]);
  *
  */
 
-static int rand_int(int n);
-void sattolo_shuffle(volatile void **array, int n);
+//static 
+int rand_int(int n);
+//void sattolo_shuffle(volatile void **array, int n);
 
 
 
@@ -247,7 +248,7 @@ volatile char **D;
 volatile char **E;
 volatile char **init_prime;
 volatile char **init_reprime;
-
+/*
 int nehalem_cache_slice_alg(void* addr);
 int nehalem_setup(unsigned long int monline);
 void nehalem_prime();
@@ -288,6 +289,6 @@ int skylake_i7_6700_setup(unsigned long int monline);
 void skylake_i7_6700_prime();
 void skylake_i7_6700_reprime();
 unsigned long int skylake_i7_6700_probe();
-
+*/
 
 #endif

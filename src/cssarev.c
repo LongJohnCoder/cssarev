@@ -106,7 +106,8 @@ unsigned long int get_global_timestamp_stop(void) {
  *
  */
 
-static int rand_int(int n) {
+//static 
+ int rand_int(int n) {
     int limit = RAND_MAX - RAND_MAX % n;
     int rnd;
     do {
