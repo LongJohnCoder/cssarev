@@ -23,6 +23,9 @@ TARGET = main
 rev: src/rev.c src/cssarev.c
 	$(CC) $(CFLAGS) -o bin/rev src/rev.c src/cssarev.c -O0 $(CHEADER_DIR) $(CLIBDIR) $(CLIBS)
 
+rev_v2: src/rev_v2.c src/cssarev.c
+	$(CC) $(CFLAGS) -o bin/rev_v2 src/rev_v2.c src/cssarev.c -O0 $(CHEADER_DIR) $(CLIBDIR) $(CLIBS)
+
 
 
 

@@ -5,10 +5,10 @@
 #include <sys/mman.h>
 
 // only one should be left uncommented
-//#define MY_MACBOOK_PRO
+#define MY_MACBOOK_PRO
 //#define DTU_LIBRARY_PC_FEB2016
 //#define DTU_LAB305_PC_FEB2016
-#define DTU_NEHALEM
+//#define DTU_NEHALEM
 // up to here
 
 
@@ -248,7 +248,7 @@ volatile char **D;
 volatile char **E;
 volatile char **init_prime;
 volatile char **init_reprime;
-/*
+
 int nehalem_cache_slice_alg(void* addr);
 int nehalem_setup(unsigned long int monline);
 void nehalem_prime();
@@ -270,12 +270,12 @@ void sandybridge_i5_2435m_reprime();
 unsigned long int sandybridge_i5_2435m_probe();
 
 int sandybridge_i5_2435m_cache_slice_from_virt_m2(void* addr);
-int sandybridge_i5_2435m_cache_slice_alg_2(void* addr);
-int sandybridge_i5_2435m_setup_2(unsigned long int monline);
-void sandybridge_i5_2435m_prime_2();
-void sandybridge_i5_2435m_reprime_2();
-unsigned long int sandybridge_i5_2435m_probe_2();
-
+int sandybridge_i5_2435m_cache_slice_alg_m2(void* addr);
+int sandybridge_i5_2435m_setup_m2(unsigned long int monline);
+void sandybridge_i5_2435m_prime_m2();
+void sandybridge_i5_2435m_reprime_m2();
+unsigned long int sandybridge_i5_2435m_probe_m2();
+/*
 int haswell_i7_4600m_cache_slice_from_virt(void* addr);
 int haswell_i7_4600m_cache_slice_alg(void* addr);
 int haswell_i7_4600m_setup(unsigned long int monline);
