@@ -1560,7 +1560,7 @@ int haswell_i7_4600m_cache_slice_alg(void* addr) {
     //unsigned long int x = ((unsigned long int*)addr)[0];
     //unsigned long int i_addr = (unsigned long int) get_pfn(addr);
     
-    printf("\n%016p : \n", (void *) addr);
+//    printf("\n%016p : \n", (void *) addr);
 
     unsigned long int i_addr = (unsigned long int) addr;
 
