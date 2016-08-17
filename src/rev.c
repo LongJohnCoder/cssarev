@@ -10,10 +10,10 @@
 
 #include <math.h>
 
-#define EMPIRICAL_CACHE_ACCESS_TIME_LOW  110
-#define EMPIRICAL_CACHE_ACCESS_TIME_HIGH 130
+#define EMPIRICAL_CACHE_ACCESS_TIME_LOW  70  //110
+#define EMPIRICAL_CACHE_ACCESS_TIME_HIGH 100 //130
 
-#define HUGEPAGES_AVAILABLE 64
+#define HUGEPAGES_AVAILABLE 128
 
 #define MEASURES 1000
 
@@ -22,13 +22,15 @@ volatile char **hp[HUGEPAGES_AVAILABLE+1];		// huge pages allocated
 volatile char **hpt[HUGEPAGES_AVAILABLE+1];		// huge pages under test
 
 int count;
+int prefix;
+int idx;
 
 void randHpt();
 void primeHpt();
 void reprimeHpt();
 unsigned long int probeHpt();
 unsigned long int  probeprobeSingle(void *addr);
-void addSingleHpt(int idx);
+void addSingleHpt();
 void primeHptExt();
 void reprimeHptExt();
 unsigned long int probeHptExt();
@@ -54,8 +56,9 @@ int main(int argc, char* argv[])
 
     unsigned long int tmp_tt;
     int dumy;
+    prefix = 0x00;
+    idx = 0;
     count = CACHE_L3_ASSOCIATIVITY;
-
 
     for (i=0;i<HUGEPAGES_AVAILABLE-CACHE_L3_ASSOCIATIVITY;++i) {
     	randHpt();
@@ -79,10 +82,12 @@ int main(int argc, char* argv[])
 	int in = 0;
 	int out = 0;
 
+	idx = count;
 //for (int k = 0; k < 100; ++k) {
     volatile char **tmp;
-    for (i=count; i<HUGEPAGES_AVAILABLE; ++i){
-    	addSingleHpt(i);
+    for (i=16*count; i<16*HUGEPAGES_AVAILABLE; ++i){
+	printf("idx:%d-prefix:%d ", idx, prefix);
+    	addSingleHpt();
     	tt = 999999999;
 	    for (dumy=0; dumy < 10000; ++dumy) {
 	    	primeHptExt();
@@ -91,20 +96,20 @@ int main(int argc, char* argv[])
 	    	if (tt > tmp_tt) tt = tmp_tt;
 	    }
 	    if (tt/(count+1) < EMPIRICAL_CACHE_ACCESS_TIME_HIGH) {
-//		printf("%lu\t", tt/(count+1));
-//	    	printf("OUT\t");
+		printf("%lu\t", tt/(count+1));
+	    	printf("OUT\t");
 	    	out++;
 	    } else {
 	    	printf("%lu\t", tt/(count+1));
 	    	printf("IN\t");
 	    	in++;
-		printf("%d\t:\t%012p - ", haswell_i7_4600m_cache_slice_alg((void *)(get_pfn((void*)hpt[count]) << 12)), (void *)(get_pfn((void*)hpt[count]) << 12));
-		printPtr2bin((void *)(get_pfn((void*)hpt[count]) << 12));
+//		printf("%d\t:\t%012p - ", haswell_i7_4600m_cache_slice_alg((void *)(get_pfn((void*)hpt[count]) << 12)), (void *)(get_pfn((void*)hpt[count]) << 12));
+//		printPtr2bin((void *)(get_pfn((void*)hpt[count]) << 12));
 	    }
 	    
 //	    printf("%d\t:\t%012p - ", sandybridge_i5_2435m_cache_slice_alg_m2((void *)(get_pfn((void*)hpt[count]) << 12)), (void *)(get_pfn((void*)hpt[count]) << 12));
-//	    printf("%d\t:\t%012p - ", haswell_i7_4600m_cache_slice_alg((void *)(get_pfn((void*)hpt[count]) << 12)), (void *)(get_pfn((void*)hpt[count]) << 12));
-//	    printPtr2bin((void *)(get_pfn((void*)hpt[count]) << 12));
+	    printf("%d\t:\t%012p - ", haswell_i7_4600m_cache_slice_alg((void *)(get_pfn((void*)hpt[count]) << 12)), (void *)(get_pfn((void*)hpt[count]) << 12));
+	    printPtr2bin((void *)(get_pfn((void*)hpt[count]) << 12));
     }
 //}
     printf("in\t:\t%d\tout\t:\t%d\n", in, out);
@@ -160,14 +165,17 @@ void randHpt() {
 }
 
 
-void addSingleHpt(int idx) {
+void addSingleHpt() {
 	int i;
 	volatile char **tmp;
-
+	//volatile char **tmp2;
 	//for (i=0; i<count; ++i) {
 	//	hpt[i] = hp[i];
 	//}
-	hpt[count] = hp[idx];
+
+	tmp = hp[idx];
+	hpt[count] = &tmp[(prefix<<17)/8];
+//	hpt[count] = hp[(prefix<<17)/8 + idx];
 
 	for (int i = 0; i < count+1; ++i) {
 		tmp = hpt[i];
@@ -177,6 +185,10 @@ void addSingleHpt(int idx) {
 	
 	init_prime = (volatile char **)hpt[0];
 	init_reprime = (volatile char **)hpt[0] + KB(32)/sizeof(volatile char **);
+
+	prefix++;
+	if (prefix == 0x10) { prefix = 0x00; idx++; }
+
 }
 
 

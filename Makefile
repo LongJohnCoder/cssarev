@@ -23,7 +23,7 @@ TARGET = main
 rev: src/rev.c src/cssarev.c
 	$(CC) $(CFLAGS) -o bin/rev src/rev.c src/cssarev.c -O0 $(CHEADER_DIR) $(CLIBDIR) $(CLIBS)
 
-rev: src/haswell_rev.c src/cssarev.c
+haswell_rev: src/haswell_rev.c src/cssarev.c
 	$(CC) $(CFLAGS) -o bin/haswell_rev src/haswell_rev.c src/cssarev.c -O0 $(CHEADER_DIR) $(CLIBDIR) $(CLIBS)
 
 
