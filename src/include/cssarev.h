@@ -225,7 +225,7 @@ unsigned int timestamp_weak(void);
 
 void printPtr2bin(void* ptr);
 void ptr2bin(void* ptr, char bin[65]);
-
+void printPtr2binSageMatrix(void* ptr);
 
 /*
  *

@@ -83,6 +83,18 @@ void printPtr2bin(void* ptr) {
 	printf("\n");
 }
 
+void printPtr2binSageMatrix(void* ptr) {
+        char bin[65];
+        ptr2bin((void *)ptr, bin);
+        for (int i = 0; i < 8; ++i) {
+                for (int j = 0; j < 8; ++j) {
+                        printf("%c,", bin[63-(i*8+j)]);
+                }
+                printf(" ");
+        }
+        printf("\n");
+}
+
 
 
 
