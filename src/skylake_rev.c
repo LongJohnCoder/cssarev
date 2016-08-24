@@ -10,8 +10,8 @@
 
 #include <math.h>
 
-#define EMPIRICAL_CACHE_ACCESS_TIME_LOW  110
-#define EMPIRICAL_CACHE_ACCESS_TIME_HIGH 142
+#define EMPIRICAL_CACHE_ACCESS_TIME_LOW  70
+#define EMPIRICAL_CACHE_ACCESS_TIME_HIGH 100
 
 #define HUGEPAGES_AVAILABLE 512
 
@@ -96,20 +96,20 @@ int main(int argc, char* argv[])
 	    	if (tt > tmp_tt) tt = tmp_tt;
 	    }
 	    if (tt/(count+1) < EMPIRICAL_CACHE_ACCESS_TIME_HIGH) {
-//		printf("%lu\t", tt/(count+1));
-//	    	printf("OUT\t");
+		printf("%lu\t", tt/(count+1));
+	    	printf("OUT\t");
 	    	out++;
 	    } else {
 	    	printf("%lu\t", tt/(count+1));
 	    	printf("IN\t");
 	    	in++;
-		printf("%d\t:\t%012p - ", haswell_i7_4600m_cache_slice_alg((void *)(get_pfn((void*)hpt[count]) << 12)), (void *)(get_pfn((void*)hpt[count]) << 12));
-		printPtr2binSageMatrix((void *)(get_pfn((void*)hpt[count]) << 12));
+//		printf("%d\t:\t%012p - ", haswell_i7_4600m_cache_slice_alg((void *)(get_pfn((void*)hpt[count]) << 12)), (void *)(get_pfn((void*)hpt[count]) << 12));
+//		printPtr2binSageMatrix((void *)(get_pfn((void*)hpt[count]) << 12));
 	    }
 	    
-//	    printf("%d\t:\t%012p - ", sandybridge_i5_2435m_cache_slice_alg_m2((void *)(get_pfn((void*)hpt[count]) << 12)), (void *)(get_pfn((void*)hpt[count]) << 12));
-//	    printf("%d\t:\t%012p - ", haswell_i7_4600m_cache_slice_alg((void *)(get_pfn((void*)hpt[count]) << 12)), (void *)(get_pfn((void*)hpt[count]) << 12));
-//	    printPtr2bin((void *)(get_pfn((void*)hpt[count]) << 12));
+	    printf("%d\t:\t%012p - ", sandybridge_i5_2435m_cache_slice_alg_m2((void *)(get_pfn((void*)hpt[count]) << 12)), (void *)(get_pfn((void*)hpt[count]) << 12));
+	    printf("%d\t:\t%012p - ", haswell_i7_4600m_cache_slice_alg((void *)(get_pfn((void*)hpt[count]) << 12)), (void *)(get_pfn((void*)hpt[count]) << 12));
+	    printPtr2bin((void *)(get_pfn((void*)hpt[count]) << 12));
     }
 //}
     printf("in\t:\t%d\tout\t:\t%d\n", in, out);
